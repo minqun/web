@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ConsoleLogOnBuildWebpackPlugin = require("./webpackPlugin/ConsoleLogOnBuildWebpackPlugin.js");
+const HtmlPluginReplace = require("./webpackPlugin/HtmlPluginReplace.js");
 const babelCommonConfig = require("./babel/babelCommonConfig");
 const babelConfig = babelCommonConfig(false);
 console.log(process.env.NODE_ENV, "环境");
@@ -14,7 +14,7 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          {
+          process.env.NODE_ENV === "development"? "style-loader": {
             loader: MiniCssExtractPlugin.loader,
             options: {
               // 这里可以指定一个 publicPath
@@ -51,9 +51,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new ConsoleLogOnBuildWebpackPlugin({ x: "你x", y: "我y" }),
+    // new HtmlPluginReplace(),
     new HtmlWebpackPlugin({
-      template: "./src/pages/index/index.html",
+      template: 'html-withimg-loader!' + path.resolve(__dirname, './src/pages/index/index.html'),
       filename: `index/index.html`,
       inject: "body",
       minify: false,
@@ -69,8 +69,7 @@ module.exports = {
     // 编译后的输出路径
     // 注意此处必须是绝对路径，不然 webpack 将会抛错（使用 Node.js 的 path 模块）
     path: path.resolve(__dirname, "dist"),
-
-    // 输出 bundle 的名称
+    publicPath: '/',  //可能导致图片路径问题
     filename: "index/index.js",
   },
 };
