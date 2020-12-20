@@ -12,11 +12,11 @@ class HtmlPluginReplace {
           console.log(
             "The compiler is starting a new compilation..................."
           );
-          console.log(data.plugin.childCompilerHash)
+          const fileName = data.outputName.split('/')[0]
           // Manipulate the content
-          var patt = /(<link[\s\S]+?href=")(\S+)?(.css"[\s\S]*?\/>)/g;
+          var patt = /(<script[\s\S]+?href=")(\S+)?(.js"[\s\S]*?\/>)/g;
           // console.log(data.html.replace(patt, `$1$2$3hhh$4`))
-          data.html = String(data.html).replace(patt, `$1$2.${data.plugin.childCompilerHash}$3`);
+          // data.html = String(data.html).replace(patt, `$1$2.${data.plugin.childCompilerHash}$3`);
           // Tell webpack to move on
           console.log(data.html)
           cb(null, data);

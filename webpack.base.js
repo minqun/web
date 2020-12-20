@@ -1,14 +1,13 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlPluginReplace = require("./webpackPlugin/HtmlPluginReplace.js");
 const babelCommonConfig = require("./babel/babelCommonConfig");
 const babelConfig = babelCommonConfig(false);
-console.log(process.env.NODE_ENV, "环境");
+const files = require('./pagesFile')
 module.exports = {
   mode: "development",
   //  起点或是应用程序的起点入口
-  entry: "./src/pages/index/index",
+  entry: files.mainEntries,
   module: {
     rules: [
       {
@@ -52,24 +51,19 @@ module.exports = {
   },
   plugins: [
     // new HtmlPluginReplace(),
-    new HtmlWebpackPlugin({
-      template: 'html-withimg-loader!' + path.resolve(__dirname, './src/pages/index/index.html'),
-      filename: `index/index.html`,
-      inject: "body",
-      minify: false,
-      chunks: ["index", "verndor", "commons"],
-    }),
+    ...files.htmlPlugins,
     new MiniCssExtractPlugin({
-      filename: "index/index.[hash].css",
+      filename: "[name]/[name].[hash].css",
       // publicPath: path.resolve(__dirname, '/dist'),
-      chunkFilename: "index/[id].[hash].css",
-    }),
+      chunkFilename: "[name]/[id].[hash].css",
+  }),
+    require("autoprefixer"),
   ],
   output: {
     // 编译后的输出路径
     // 注意此处必须是绝对路径，不然 webpack 将会抛错（使用 Node.js 的 path 模块）
     path: path.resolve(__dirname, "dist"),
     publicPath: '/',  //可能导致图片路径问题
-    filename: "index/index.js",
+    filename: "[name]/[name].[hash].js",
   },
 };
