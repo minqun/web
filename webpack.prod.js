@@ -10,14 +10,14 @@ let config = webpackMerge({}, BaseConfig, {
     new CopyPlugin({
       patterns: [{ from: "publish", to: "publish" }],
     }),
-    new HtmlPluginReplace(),
+    // new HtmlPluginReplace(),
   ],
   output: {
     // 编译后的输出路径
     // 注意此处必须是绝对路径，不然 webpack 将会抛错（使用 Node.js 的 path 模块）
     path: path.resolve(__dirname, "dist"),
     publicPath: "./", //可能导致图片路径问题
-    filename: "[name]/[name].[hash].js",
+    filename: "js/[name].[hash].js",
   },
 
   devtool: "inline-source-map",

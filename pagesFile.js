@@ -17,7 +17,7 @@ const createFiles = () => {
     result.push(
       new HtmlWebpackPlugin({
         template: template,
-        filename: `${name}/${tplName}.html`,
+        filename: `${tplName}.html`,
         inject: "body",
         minify: false,
         chunks: chunks,

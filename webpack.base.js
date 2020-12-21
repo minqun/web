@@ -58,9 +58,9 @@ module.exports = {
           // new HtmlPluginReplace(),
           ...files.htmlPlugins,
           new MiniCssExtractPlugin({
-            filename: "[name]/[name].[hash].css",
+            filename: "css/[name].[hash].css",
             // publicPath: path.resolve(__dirname, '/dist'),
-            chunkFilename: "[name]/[id].[hash].css",
+            chunkFilename: "css/[id].[hash].css",
           }),
           new CopyPlugin({
             patterns: [{ from: "publish", to: "publish" }],
@@ -73,17 +73,17 @@ module.exports = {
           }),
           ...files.htmlPlugins,
           new MiniCssExtractPlugin({
-            filename: "[name]/[name].[hash].css",
+            filename: "css/[name].[hash].css",
             // publicPath: path.resolve(__dirname, '/dist'),
-            chunkFilename: "[name]/[id].[hash].css",
+            chunkFilename: "css/[id].[hash].css",
           }),
           require("autoprefixer"),
         ]
       : [
           new MiniCssExtractPlugin({
-            filename: "[name]/[name].[hash].css",
+            filename: "css/[name].[hash].css",
             // publicPath: path.resolve(__dirname, '/dist'),
-            chunkFilename: "[name]/[id].[hash].css",
+            chunkFilename: "css/[id].[hash].css",
           }),
         ],
   output: {
@@ -91,6 +91,6 @@ module.exports = {
     // 注意此处必须是绝对路径，不然 webpack 将会抛错（使用 Node.js 的 path 模块）
     path: path.resolve(__dirname, "dist"),
     publicPath: "/", //可能导致图片路径问题
-    filename: "[name]/[name].[hash].js",
+    filename: "js/[name].[hash].js",
   },
 };
