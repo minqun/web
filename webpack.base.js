@@ -93,4 +93,28 @@ module.exports = {
     publicPath: "/", //可能导致图片路径问题
     filename: "js/[name].[hash].js",
   },
+  optimization: {
+    //webpack4新增
+    splitChunks: {
+      //可以在这里直接设置抽离代码的参数，最后将符合条件的代码打包至一个公共文件
+      cacheGroups: {
+        //设置缓存组用来抽取满足不同规则的chunk,下面以生成common、vender为例
+        // 根据不同的参数设置抽取不同条件的公共js
+        common: {
+          //
+          name: "common",
+          chunks: "all",
+          minSize: 10,
+          minChunks: 1,
+          priority: 1, //设置匹配优先级，数字越小，优先级越低
+        },
+        vendor: {
+          name: "vender",
+          test: /[\\/]node_modules[\\/]/, //匹配node模块中匹配的的模块
+          priority: 11, //设置匹配优先级，数字越大，优先级越高
+          chunks: "all",
+        },
+      },
+    },
+  },
 };

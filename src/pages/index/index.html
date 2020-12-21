@@ -6,7 +6,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link  rel="stylesheet" href="./index/index.css" type="text/css" /> -->
   <title>Document</title>
-
+  <script>
+    (function () {
+      var body = document.body || document.documentElement;
+      body.style.display = 'none';
+      /* 
+      * @param: designWidth 设计尺寸
+      * @param: minWidth 最小尺寸
+      * @param: maxWidth 最大尺寸
+      */
+      function setFontSize(designWidth, minWidth, maxWidth) {
+        var htmlEl = document.documentElement || document.body,
+          momentWith = 0;
+        momentWith = htmlEl.clientWidth > maxWidth ? maxWidth : htmlEl.clientWidth;
+        if (!htmlEl.clientWidth) momentWith = 1280;
+        momentWith = momentWith < minWidth ? minWidth : momentWith;
+        htmlEl.style.fontSize = (momentWith / designWidth) * 100 + 'px';
+      }
+      setFontSize(1920, 1280, 1920);
+      window.addEventListener('resize', function () {
+        setFontSize(1920, 1280, 1920);
+      });
+      setTimeout(function () {
+        body.style.display = 'block';
+      }, 200);
+    })()
+  </script>
 </head>
 
 <body>
