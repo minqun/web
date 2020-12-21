@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlPluginReplace = require("./webpackPlugin/HtmlPluginReplace.js");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -7,8 +8,12 @@ const BaseConfig = require("./webpack.base");
 let config = webpackMerge({}, BaseConfig, {
   plugins: [
     new CleanWebpackPlugin(["dist"]), // 打包前，先将dist文件中的内容全部清除
-    new CopyPlugin({
-      patterns: [{ from: "publish", to: "publish" }],
+    new HtmlWebpackPlugin({
+      template: `./src/pages/demo/demo.html`,
+      filename: "demo/demo.html",
+      inject: "body",
+      minify: false,
+      chunks: ["demo", "verndor", "commons"],
     }),
     new HtmlPluginReplace(),
   ],
@@ -19,7 +24,6 @@ let config = webpackMerge({}, BaseConfig, {
     publicPath: "./", //可能导致图片路径问题
     filename: "[name]/[name].[hash].js",
   },
-
   devtool: "inline-source-map",
   stats: "errors-only",
   mode: "production",
