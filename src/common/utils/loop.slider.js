@@ -21,9 +21,7 @@ var LoopSlider = {
         _t.autoplay();
       }
       const imgs = $(obj.el).find(".banner-img");
-      console.log(imgs);
       _t.moveDis = $(document).width();
-      console.log(_t.moveDis, $(obj.el));
       _t.max = imgs.length;
       imgs.wrap("<div class='slide-frame'></div>");
       const f_clone = $(".slide-frame:first").clone();
@@ -165,9 +163,9 @@ var LoopSlider = {
     } else if (this.perIndex < 0) {
       this.perIndex = this.max - 1;
     }
-    this.activePoint(this.perIndex);
+    this.activePoint(this.perIndex, index == this.perIndex);
   },
-  activePoint: function (index) {
+  activePoint: function (index, checked) {
     $(".points li")
       .eq(index)
       .addClass("active")
@@ -178,6 +176,43 @@ var LoopSlider = {
       .addClass("active")
       .siblings(".slide-frame")
       .removeClass("active");
+    $(".slide-frame")
+      .find(".info-banner")
+      .find(".cell")
+      .removeClass("animated")
+      .removeClass("fadeInLeft");
+    $(".slide-frame")
+      .find(".info-banner")
+      .find(".desc")
+      .removeClass("animated-sec")
+      .removeClass("fadeInLeft");
+    if (index == 0 && !checked) {
+      $(".slide-frame")
+        .eq(3)
+        .find(".info-banner")
+        .find(".cell")
+        .addClass("animated")
+        .addClass("fadeInLeft");
+      $(".slide-frame")
+        .eq(3)
+        .find(".info-banner")
+        .find(".desc")
+        .addClass("animated-sec")
+        .addClass("fadeInLeft");
+    } else {
+      $(".slide-frame")
+        .eq(index)
+        .find(".info-banner")
+        .find(".cell")
+        .addClass("animated")
+        .addClass("fadeInLeft");
+      $(".slide-frame")
+        .eq(index)
+        .find(".info-banner")
+        .find(".desc")
+        .addClass("animated-sec")
+        .addClass("fadeInLeft");
+    }
   },
   pointsClick: function (t) {
     $(".points li").click(function () {
@@ -189,7 +224,7 @@ var LoopSlider = {
       transform: `translate3d(-${index * t.moveDis}px,0px,0px)`,
       transition: `all ${t.duration}ms ${t.easing}`,
     });
-    t.activePoint(index);
+    t.activePoint(index, true);
   },
 };
 module.exports = LoopSlider;

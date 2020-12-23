@@ -1,11 +1,25 @@
 require("../../common/less/common.less");
 require("./index.less");
-require("./index.html");
 import $ from "../../common/utils/jquery.js";
 const scrollTo = require("../../common/utils/jquery.scroll.js");
 const loopSlide = require("../../common/utils/loop.slider");
 scrollTo($);
 
+window.addEventListener("scroll", function (e) {
+  const ratio = $(document).width() / 1920;
+  if (
+    e.target.scrollingElement.scrollTop >
+      $("#nav_3").offset().top - ratio * 320 &&
+    !$("#nav_3 .item-card").hasClass(".fadeInUp")
+  ) {
+    $("#nav_3 .item-card").addClass("animated").addClass("fadeInUp");
+  }
+  if (e.target.scrollingElement.scrollTop > $("#nav_2").offset().top) {
+    $("#fixedTools").show();
+  } else {
+    $("#fixedTools").hide();
+  }
+});
 loopSlide.init({
   el: ".content", //选择器
   navigator: {
@@ -19,19 +33,28 @@ loopSlide.init({
 });
 
 $(function () {
-  $(".nav_1").click(function () {
-    $.scrollTo("#pro", 500);
+  if (!$("#nav_1 .info-banner .cell").hasClass(".fadeInLeft")) {
+    $("#nav_1 .info-banner")
+      .eq(0)
+      .find(".cell")
+      .addClass("animated")
+      .addClass("fadeInLeft");
+    $("#nav_1 .info-banner")
+      .eq(0)
+      .find(".desc")
+      .addClass("animated-sec")
+      .addClass("fadeInLeft");
+  }
+  $(".nav li").on("click", function (e) {
+    const id = $(e.target).attr("class");
+    $.scrollTo(`#${id}`, 500);
+    $(e.target)
+      .parent()
+      .addClass("active")
+      .siblings("li")
+      .removeClass("active");
   });
-  $(".nav_2").click(function () {
-    $.scrollTo("#news", 800);
-  });
-  $(".nav_3").click(function () {
-    $.scrollTo("#ser", 1000);
-  });
-  $(".nav_c4").click(function () {
-    $.scrollTo("#con", 1200);
-  });
-  $(".nav_5").click(function () {
-    $.scrollTo("#job", 1500);
+  $("#fixedTools").click(function () {
+    $.scrollTo("#nav_1", 500);
   });
 });

@@ -7,8 +7,8 @@ let config = webpackMerge({}, BaseConfig, {
   devtool: "inline-source-map",
   stats: "errors-only",
   devServer: {
-    host: "127.0.0.1",
-    port: "8007",
+    host: "192.168.5.120",
+    port: "8002",
     contentBase: path.join(__dirname, "dist"),
   },
 });
