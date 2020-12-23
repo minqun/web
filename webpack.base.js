@@ -23,7 +23,7 @@ module.exports = {
                   // 默认使用 webpackOptions.output中的publicPath
                   // publicPath的配置，和plugins中设置的filename和chunkFilename的名字有关
                   // 如果打包后，background属性中的图片显示不出来，请检查publicPath的配置是否有误
-                  publicPath: "./",
+                  publicPath: "../",
                   // publicPath: devMode ? './' : '../',   // 根据不同环境指定不同的publicPath
                   hmr: process.env.NODE_ENV == "development", // 仅dev环境启用HMR功能
                 },
@@ -96,17 +96,19 @@ module.exports = {
   optimization: {
     //webpack4新增
     splitChunks: {
+      // enforceSizeThreshold: 100,
+      maxSize: 100 * 1024, // 分割的chunk最小为30kb
       //可以在这里直接设置抽离代码的参数，最后将符合条件的代码打包至一个公共文件
       cacheGroups: {
         //设置缓存组用来抽取满足不同规则的chunk,下面以生成common、vender为例
         // 根据不同的参数设置抽取不同条件的公共js
         common: {
-          //
+          test: /.js$/,
           name: "common",
           chunks: "all",
-          minSize: 10,
+          maxSize: 100 * 1024,
           minChunks: 1,
-          priority: 1, //设置匹配优先级，数字越小，优先级越低
+          priority: 2, //设置匹配优先级，数字越小，优先级越低
         },
         vendor: {
           name: "vender",
