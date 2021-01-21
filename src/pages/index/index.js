@@ -4,7 +4,6 @@ import $ from "../../common/utils/jquery.js";
 const scrollTo = require("../../common/utils/jquery.scroll.js");
 const loopSlide = require("../../common/utils/loop.slider");
 scrollTo($);
-
 window.addEventListener("scroll", function (e) {
   const ratio = $(document).width() / 1920;
   if (

@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development  webpack-dev-server --config ./webpack.dev.js  --hot ",
     "test": "cross-env NODE_ENV=test  webpack --config ./webpack.test.js ",
-    "build": "cross-env NODE_ENV=production  webpack --config ./webpack.prod.js "
+    "build": "cross-env NODE_ENV=production  webpack --config ./webpack.prod.js ",
+    "buildJs": "cross-env NODE_ENV=production  webpack --config ./webpack.jsplugin.js "
   },
   "devDependencies": {
     "autoprefixer": "^9.7.2",
@@ -46,6 +47,7 @@
     "webpackbar": "^4.0.0"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "1.0.0",
     "copy-webpack-plugin": "6.2.1",
